@@ -72,7 +72,7 @@ class game {
             x[3] = game_W / 2 + game_W / 3;
             this.rec = [];
             for (let i = 0; i < N; i++)
-                this.rec[i] = new rectangle(this, x[1], game_H - this.getWidth() * (i + 1), game_W / 3 - i * ((game_W / 3 - 3 * this.getWidth()) / (N - 1)));
+                this.rec[i] = new rectangle(this, x[1], game_H - this.getWidth() / 2 - this.getWidth() * (i + 1), game_W / 3 - i * ((game_W / 3 - 3 * this.getWidth()) / (N - 1)));
         }
     }
 
@@ -88,7 +88,7 @@ class game {
         this.context.fillRect(0 , 0, game_W, game_H);
         this.context.fillStyle = '#660000';
         for (let i = 1; i <= 3; i++)
-            this.context.fillRect(x[i] - this.getWidth() / 2 , 2 * this.getWidth(), this.getWidth(), game_H);
+            this.context.fillRect(x[i] - this.getWidth() / 4 , 2 * this.getWidth(), this.getWidth() / 2, game_H);
         this.context.fillRect(0 , game_H - this.getWidth(), game_W, this.getWidth() * 1.1);
     }
     getWidth() {
