@@ -50,7 +50,7 @@ class game {
             touchCheck = true;
             var x = evt.offsetX == undefined ? evt.layerX : evt.offsetX;
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
-            if (x < this.getWidth() && y < this.getWidth())
+            if (x < this.getWidth() && y < 2* this.getWidth())
                 this.Auto();
             Xstart = this.getCol(x);
         })
@@ -88,7 +88,7 @@ class game {
             touchCheck = true;
             var x = evt.touches[0].pageX - (document.documentElement.clientWidth - game_W) / 2;
             var y = evt.touches[0].pageY;
-            if (x < this.getWidth() && y < this.getWidth())
+            if (x < this.getWidth() && y < 2 * this.getWidth())
                 this.Auto();
             Xstart = this.getCol(x);
         })
@@ -160,6 +160,13 @@ class game {
         this.clearScreen();
         for (let i = 1; i <= N; i++)
             this.rec[i].draw();
+        this.drawIcon();
+    }
+
+    drawIcon() {
+        this.context.font = this.getWidth() + 'px Calibri';
+        this.context.fillStyle = "#000000";
+        this.context.fillText("Auto", 0 , this.getWidth());
     }
 
     clearScreen() {
