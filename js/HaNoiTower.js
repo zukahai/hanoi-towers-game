@@ -6,6 +6,7 @@ x = [, 0, 0, 0];
 win = false;
 cl = ["#666633", "#220000", "#006600", "#FF00FF", "#FF9900", "#FF99CC", "#99FF33", "#00FFFF"];
 Xstart = Xend = 0;
+touchCheck = false;
 
 class game {
     constructor() {
@@ -35,6 +36,7 @@ class game {
 
     listenMouse() {
         document.addEventListener("mousedown", evt => {
+            touchCheck = true;
             var x = evt.offsetX == undefined ? evt.layerX : evt.offsetX;
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
             Xstart = this.getCol(x);
@@ -43,15 +45,18 @@ class game {
         document.addEventListener("mousemove", evt => {
             var x = evt.offsetX == undefined ? evt.layerX : evt.offsetX;
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
+            if (touchCheck && A[Xstart].length > 0) {
+                this.rec[A[Xstart][A[Xstart].length - 1]].y = y;
+                this.rec[A[Xstart][A[Xstart].length - 1]].x = x;
+            }
         })
 
         document.addEventListener("mouseup", evt => {
+            touchCheck = false;
             var x = evt.offsetX == undefined ? evt.layerX : evt.offsetX;
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
             Xend = this.getCol(x);
-            if (Xstart != Xend) {
-                this.move(Xstart, Xend);
-            }
+            this.move(Xstart, Xend);
         })
     }
 
@@ -60,26 +65,36 @@ class game {
             var x = evt.touches[0].pageX - (document.documentElement.clientWidth - game_W) / 2;
             var y = evt.touches[0].pageY;
             Xend = this.getCol(x);
-            
+            if (touchCheck && A[Xstart].length > 0) {
+                this.rec[A[Xstart][A[Xstart].length - 1]].y = y;
+                this.rec[A[Xstart][A[Xstart].length - 1]].x = x;
+            }
         })
 
         document.addEventListener("touchstart", evt => {
+            touchCheck = true;
             var x = evt.touches[0].pageX - (document.documentElement.clientWidth - game_W) / 2;
             var y = evt.touches[0].pageY;
             Xstart = this.getCol(x);
         })
 
-        document.addEventListener("touchend", evt => {    
-            if (Xstart != Xend)
-                this.move(Xstart, Xend);
+        document.addEventListener("touchend", evt => {   
+            this.move(Xstart, Xend);
+            touchCheck = false;
         })
 
         this.context.restore();
     }
 
     move(start, end) {
-        if (A[start][A[start].length - 1] > A[end][A[end].length - 1])
+        if (A[start].length <= 0)
             return;
+        if (A[start][A[start].length - 1] > A[end][A[end].length - 1] || start == end) {
+            this.rec[A[start][A[start].length - 1]].y = game_H - this.getWidth() / 2 - (A[start].length) * this.getWidth();
+            this.rec[A[start][A[start].length - 1]].x = x[start];
+            return;
+        }
+            
         this.rec[A[start][A[start].length - 1]].y = game_H - this.getWidth() / 2 - (A[end].length + 1) * this.getWidth();
         this.rec[A[start][A[start].length - 1]].x = x[end];
         A[end][A[end].length] = A[start][A[start].length - 1];
