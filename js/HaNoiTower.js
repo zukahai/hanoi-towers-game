@@ -1,15 +1,19 @@
 game_W = 0, game_H = 0;
-N = 4;
+N = 3;
 A = [];
 B = [];
 x = [, 0, 0, 0];
 index = 0;
 count = 1;
 auto = false;
+Round = 0;
 win = false;
-cl = ["#666633", "#220000", "#006600", "#FF00FF", "#FF9900", "#FF99CC", "#99FF33", "#00FFFF"];
+cl = ["#000099", "#666633", "#220000", "#006600", "#FF00FF", "#FF9900", "#FF99CC", "#99FF33", "#00FFFF", "FFFFCC", "#FFFFCC"];
 Xstart = Xend = 0;
 touchCheck = false;
+
+var auto_im = new Image();
+auto_im.src = "images/auto.png";
 
 class game {
     constructor() {
@@ -50,8 +54,10 @@ class game {
             touchCheck = true;
             var x = evt.offsetX == undefined ? evt.layerX : evt.offsetX;
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
-            if (x < this.getWidth() && y < 2* this.getWidth())
+            if (x <  1.5 * this.getWidth() && y < this.getWidth())
                 this.Auto();
+            if (x > game_W - this.getWidth()  && y < this.getWidth())
+                this.newN();
             Xstart = this.getCol(x);
         })
 
@@ -88,7 +94,7 @@ class game {
             touchCheck = true;
             var x = evt.touches[0].pageX - (document.documentElement.clientWidth - game_W) / 2;
             var y = evt.touches[0].pageY;
-            if (x < this.getWidth() && y < 2 * this.getWidth())
+            if (x <  1.5 * this.getWidth() && y < this.getWidth())
                 this.Auto();
             Xstart = this.getCol(x);
         })
@@ -114,6 +120,7 @@ class game {
         this.rec[A[start][A[start].length - 1]].x = x[end];
         A[end][A[end].length] = A[start][A[start].length - 1];
             A[start] = A[start].slice(0, A[start].length - 1);
+        Round++;
     }
 
     loop() {
@@ -152,7 +159,7 @@ class game {
             x[3] = game_W / 2 + game_W / 3;
             this.rec = [];
             for (let i = 0; i < N; i++)
-                this.rec[N - i] = new rectangle(this, x[1], game_H - this.getWidth() / 2 - this.getWidth() * (i + 1), game_W / 3 - i * ((game_W / 3 - 3 * this.getWidth()) / (N - 1)), cl[i]);
+                this.rec[N - i] = new rectangle(this, x[1], game_H - this.getWidth() / 2 - this.getWidth() * (i + 1), game_W / 3 - i * ((game_W / 3 - 1.5 * this.getWidth()) / (N - 1)), cl[i]);
         }
     }
 
@@ -164,9 +171,10 @@ class game {
     }
 
     drawIcon() {
-        this.context.font = this.getWidth() + 'px Calibri';
+        this.context.font = this.getWidth() / 1.5 + 'px Calibri';
         this.context.fillStyle = "#000000";
-        this.context.fillText("Auto", 0 , this.getWidth());
+        this.context.fillText("Round: " + Round, game_W / 2 - this.getWidth(), this.getWidth() / 2);
+        this.context.drawImage(auto_im, 0, 0, this.getWidth() * 1.5, this.getWidth());
     }
 
     clearScreen() {
@@ -218,6 +226,26 @@ class game {
         for (let i = 0; i < N; i++)
             A[1][i] = N - i;
         auto = true;
+    }
+
+    newN() {
+        N++;
+        if (N >= 10)
+            N = 3;
+        A[1] = [];
+        A[2] = [];
+        A[3] = [];
+        for (let i = 0; i < N; i++)
+            A[1][i] = N - i;
+        B = [];
+        this.solve(1, 3, N);
+        A[1] = [];
+        A[2] = [];
+        A[3] = [];
+        for (let i = 0; i < N; i++)
+            A[1][i] = N - i;
+        auto = false;
+        game_W--;
     }
 }
 
