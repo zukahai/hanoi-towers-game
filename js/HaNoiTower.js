@@ -56,7 +56,7 @@ class game {
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
             if (x <  1.5 * this.getWidth() && y < this.getWidth())
                 this.Auto();
-            if (x > game_W - this.getWidth()  && y < this.getWidth())
+            if (x > game_W - 2 * this.getWidth()  && y < this.getWidth())
                 this.newN();
             Xstart = this.getCol(x);
         })
@@ -96,6 +96,8 @@ class game {
             var y = evt.touches[0].pageY;
             if (x <  1.5 * this.getWidth() && y < this.getWidth())
                 this.Auto();
+            if (x > game_W - 2 * this.getWidth()  && y < this.getWidth())
+                this.newN();
             Xstart = this.getCol(x);
         })
 
@@ -172,8 +174,9 @@ class game {
 
     drawIcon() {
         this.context.font = this.getWidth() / 1.5 + 'px Calibri';
-        this.context.fillStyle = "#000000";
+        this.context.fillStyle = "#FF0000";
         this.context.fillText("Round: " + Round, game_W / 2 - this.getWidth(), this.getWidth() / 2);
+        this.context.fillText("N = " + N, game_W  - 2 * this.getWidth(), this.getWidth() / 2);
         this.context.drawImage(auto_im, 0, 0, this.getWidth() * 1.5, this.getWidth());
     }
 
