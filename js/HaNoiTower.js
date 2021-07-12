@@ -2,6 +2,7 @@ game_W = 0, game_H = 0;
 N = 10;
 A = [];
 B = [];
+x = [, 0, 0, 0];
 die = false;
 
 class game {
@@ -23,8 +24,7 @@ class game {
             A[1][i] = N - i;
         this.solve(1, 3, N);
 
-        console.log(B);
-        console.log(B.length);
+        // console.log(B);
         this.render();
 
         this.r = new rectangle(this, 1, 1);
@@ -68,6 +68,9 @@ class game {
                 this.canvas.width = document.documentElement.clientWidth;
             game_W = this.canvas.width;
             game_H = this.canvas.height;
+            x[2] = game_W / 2;
+            x[1] = game_W / 2 - game_W / 3;
+            x[3] = game_W / 2 + game_W / 3;
         }
     }
 
@@ -80,6 +83,10 @@ class game {
         this.context.clearRect(0, 0, game_W, game_H);
         this.context.fillStyle = '#339999';
         this.context.fillRect(0 , 0, game_W, game_H);
+        this.context.fillStyle = '#660000';
+        for (let i = 1; i <= 3; i++)
+            this.context.fillRect(x[i] - this.getWidth() / 2 , 2 * this.getWidth(), this.getWidth(), game_H);
+        this.context.fillRect(0 , game_H - this.getWidth(), game_W, this.getWidth() * 1.1);
     }
     getWidth() {
         var area = game_W * game_H;

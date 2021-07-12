@@ -6,7 +6,7 @@ class rectangle {
     }
 
     draw() {
-        this.game.context.fillStyle = '#339999';
-        this.game.context.fillRect(0 , 0, 100, 100);
+        this.game.context.fillStyle = 'red';
+        this.game.context.fillRect(0 , 0, this.game.getWidth(), this.game.getWidth());
     }
 }
