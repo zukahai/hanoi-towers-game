@@ -96,13 +96,12 @@ class game {
             var y = evt.touches[0].pageY;
             if (x <  1.5 * this.getWidth() && y < this.getWidth())
                 this.Auto();
-            if (x > game_W - 2 * this.getWidth()  && y < this.getWidth())
-                this.newN();
-            Xstart = this.getCol(x);
+            Xstart = Xend = this.getCol(x);
         })
 
         document.addEventListener("touchend", evt => {   
-            this.move(Xstart, Xend);
+            // if (Xstart != Xend)
+                this.move(Xstart, Xend);
             touchCheck = false;
         })
 
@@ -174,9 +173,11 @@ class game {
 
     drawIcon() {
         this.context.font = this.getWidth() / 1.5 + 'px Calibri';
+        this.context.fillStyle = "green";
+        this.context.fillRect(game_W  - 1.5 * this.getWidth(), 0, 1.5 * this.getWidth(), this.getWidth());
         this.context.fillStyle = "#FF0000";
-        this.context.fillText("Round: " + Round, game_W / 2 - this.getWidth(), this.getWidth() / 2);
-        this.context.fillText("N = " + N, game_W  - 2 * this.getWidth(), this.getWidth() / 2);
+        this.context.fillText("Round: " + Round, game_W / 2 - this.getWidth(), this.getWidth() / 1.5);
+        this.context.fillText("N = " + N, game_W  - 1.5 * this.getWidth(), this.getWidth() / 1.5);
         this.context.drawImage(auto_im, 0, 0, this.getWidth() * 1.5, this.getWidth());
     }
 
@@ -241,6 +242,7 @@ class game {
         for (let i = 0; i < N; i++)
             A[1][i] = N - i;
         B = [];
+        index = Round = 0;
         this.solve(1, 3, N);
         A[1] = [];
         A[2] = [];
