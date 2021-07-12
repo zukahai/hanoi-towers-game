@@ -139,7 +139,7 @@ class game {
         }
         count++;
         if (win && count > 0) {
-            window.alert("You Win!");
+            window.alert("You Win!\n" + "N = " + N + "\nRound: " + Round);
             count = -1000000000;
         }
             
