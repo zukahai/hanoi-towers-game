@@ -3,6 +3,9 @@ N = 4;
 A = [];
 B = [];
 x = [, 0, 0, 0];
+index = 0;
+count = 1;
+auto = false;
 win = false;
 cl = ["#666633", "#220000", "#006600", "#FF00FF", "#FF9900", "#FF99CC", "#99FF33", "#00FFFF"];
 Xstart = Xend = 0;
@@ -26,6 +29,14 @@ class game {
         for (let i = 0; i < N; i++)
             A[1][i] = N - i;
 
+        this.solve(1, 3, N);
+
+        A[1] = [];
+        A[2] = [];
+        A[3] = [];
+        for (let i = 0; i < N; i++)
+            A[1][i] = N - i;
+
         this.rec = [];
         this.render();
         this.loop();
@@ -39,6 +50,8 @@ class game {
             touchCheck = true;
             var x = evt.offsetX == undefined ? evt.layerX : evt.offsetX;
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
+            if (x < this.getWidth() && y < this.getWidth())
+                this.Auto();
             Xstart = this.getCol(x);
         })
 
@@ -75,6 +88,8 @@ class game {
             touchCheck = true;
             var x = evt.touches[0].pageX - (document.documentElement.clientWidth - game_W) / 2;
             var y = evt.touches[0].pageY;
+            if (x < this.getWidth() && y < this.getWidth())
+                this.Auto();
             Xstart = this.getCol(x);
         })
 
@@ -104,15 +119,24 @@ class game {
     loop() {
         this.update();
         this.draw();
-        setTimeout(() => this.loop(), 7);
+        setTimeout(() => this.loop(), 30);
     }
 
     update() {
-        if (win)
-            return;
-        if (A[1].length + A[2].length == 0) {
+        if (auto && count % 30 == 0) {
+            if (index < B.length)
+                this.move(B[index].s, B[index].e);
+            index++;
+        }
+        count++;
+        if (win && count > 0) {
+            window.alert("You Win!");
+            count = -1000000000;
+        }
+            
+        if (A[1].length + A[2].length == 0 && !win) {
             win = true;
-            window.alert("You Win");
+            count = -10;
         }
         this.render();
     }
@@ -120,10 +144,7 @@ class game {
     render() {
         if (game_W != document.documentElement.clientWidth || game_H != document.documentElement.clientHeight) {
             this.canvas.height = document.documentElement.clientHeight;
-            
-            this.canvas.width = this.canvas.height;
-            if (document.documentElement.clientWidth <= 1.5 * this.canvas.height)
-                this.canvas.width = document.documentElement.clientWidth;
+            this.canvas.width = document.documentElement.clientWidth;
             game_W = this.canvas.width;
             game_H = this.canvas.height;
             x[2] = game_W / 2;
@@ -181,6 +202,15 @@ class game {
         if (x < 2 * game_W / 3)
             return 2;
         return 3;
+    }
+
+    Auto() {
+        A[1] = [];
+        A[2] = [];
+        A[3] = [];
+        for (let i = 0; i < N; i++)
+            A[1][i] = N - i;
+        auto = true;
     }
 }
 
