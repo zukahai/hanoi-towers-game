@@ -186,8 +186,14 @@ class game {
         this.context.fillStyle = '#339999';
         this.context.fillRect(0 , 0, game_W, game_H);
         this.context.fillStyle = '#660000';
-        for (let i = 1; i <= 3; i++)
+        for (let i = 1; i <= 3; i++) {
+            this.context.beginPath();
+            this.context.arc(x[i], 2 * this.getWidth(), this.getWidth() / 4, 0, 2 * Math.PI, false);
+            this.context.fill();
+            this.context.closePath()
+
             this.context.fillRect(x[i] - this.getWidth() / 4 , 2 * this.getWidth(), this.getWidth() / 2, game_H);
+        }
         this.context.fillRect(0 , game_H - this.getWidth(), game_W, this.getWidth() * 1.1);
     }
     getWidth() {
