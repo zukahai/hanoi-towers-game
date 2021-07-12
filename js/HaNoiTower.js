@@ -3,7 +3,8 @@ N = 4;
 A = [];
 B = [];
 x = [, 0, 0, 0];
-die = false;
+win = false;
+cl = ["#666633", "#220000", "#006600", "#FF00FF", "#FF9900", "#FF99CC", "#99FF33", "#00FFFF"];
 Xstart = Xend = 0;
 
 class game {
@@ -29,6 +30,7 @@ class game {
         this.loop();
 
         this.listenMouse();
+        this.listenTouch();
     }
 
     listenMouse() {
@@ -53,6 +55,28 @@ class game {
         })
     }
 
+    listenTouch() {
+        document.addEventListener("touchmove", evt => {
+            var x = evt.touches[0].pageX - (document.documentElement.clientWidth - game_W) / 2;
+            var y = evt.touches[0].pageY;
+            Xend = this.getCol(x);
+            
+        })
+
+        document.addEventListener("touchstart", evt => {
+            var x = evt.touches[0].pageX - (document.documentElement.clientWidth - game_W) / 2;
+            var y = evt.touches[0].pageY;
+            Xstart = this.getCol(x);
+        })
+
+        document.addEventListener("touchend", evt => {    
+            if (Xstart != Xend)
+                this.move(Xstart, Xend);
+        })
+
+        this.context.restore();
+    }
+
     move(start, end) {
         if (A[start][A[start].length - 1] > A[end][A[end].length - 1])
             return;
@@ -69,6 +93,12 @@ class game {
     }
 
     update() {
+        if (win)
+            return;
+        if (A[1].length + A[2].length == 0) {
+            win = true;
+            window.alert("You Win");
+        }
         this.render();
     }
 
@@ -86,7 +116,7 @@ class game {
             x[3] = game_W / 2 + game_W / 3;
             this.rec = [];
             for (let i = 0; i < N; i++)
-                this.rec[N - i] = new rectangle(this, x[1], game_H - this.getWidth() / 2 - this.getWidth() * (i + 1), game_W / 3 - i * ((game_W / 3 - 3 * this.getWidth()) / (N - 1)));
+                this.rec[N - i] = new rectangle(this, x[1], game_H - this.getWidth() / 2 - this.getWidth() * (i + 1), game_W / 3 - i * ((game_W / 3 - 3 * this.getWidth()) / (N - 1)), cl[i]);
         }
     }
 
