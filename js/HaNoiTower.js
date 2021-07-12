@@ -1,5 +1,5 @@
 game_W = 0, game_H = 0;
-N = 10;
+N = 5;
 A = [];
 B = [];
 x = [, 0, 0, 0];
@@ -25,9 +25,8 @@ class game {
         this.solve(1, 3, N);
 
         // console.log(B);
+        this.rec = [];
         this.render();
-
-        this.r = new rectangle(this, 1, 1);
         this.loop();
 
         this.listenMouse();
@@ -71,12 +70,16 @@ class game {
             x[2] = game_W / 2;
             x[1] = game_W / 2 - game_W / 3;
             x[3] = game_W / 2 + game_W / 3;
+            this.rec = [];
+            for (let i = 0; i < N; i++)
+                this.rec[i] = new rectangle(this, x[1], game_H - this.getWidth() * (i + 1), game_W / 3 - i * ((game_W / 3 - 3 * this.getWidth()) / (N - 1)));
         }
     }
 
     draw() {
         this.clearScreen();
-        this.r.draw();
+        for (let i = 0; i < N; i++)
+            this.rec[i].draw();
     }
 
     clearScreen() {
