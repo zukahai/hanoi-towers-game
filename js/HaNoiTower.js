@@ -1,5 +1,7 @@
 game_W = 0, game_H = 0;
-N = 5;
+N = 10;
+A = [];
+B = [];
 die = false;
 
 class game {
@@ -13,8 +15,19 @@ class game {
         this.canvas = document.createElement("canvas");
         this.context = this.canvas.getContext("2d");
         document.body.appendChild(this.canvas);
-        
+
+        A[1] = [];
+        A[2] = [];
+        A[3] = [];
+        for (let i = 0; i < N; i++)
+            A[1][i] = N - i;
+        this.solve(1, 3, N);
+
+        console.log(B);
+        console.log(B.length);
         this.render();
+
+        this.r = new rectangle(this, 1, 1);
         this.loop();
 
         this.listenMouse();
@@ -60,6 +73,7 @@ class game {
 
     draw() {
         this.clearScreen();
+        this.r.draw();
     }
 
     clearScreen() {
@@ -70,6 +84,26 @@ class game {
     getWidth() {
         var area = game_W * game_H;
         return Math.sqrt(area / 300);
+    }
+
+    solve(start, end, N) {
+        if (N == 1) {
+            B.push({s : start, e: end});
+            A[end][A[end].length] = A[start][A[start].length - 1];
+            A[start] = A[start].slice(0, A[start].length - 1);
+        } else {
+            let t = this.otherNumber(start, end);
+            this.solve(start, t, N - 1);
+            this.solve(start, end, 1);
+            this.solve(t, end, N - 1);
+        }
+    }
+
+    otherNumber(a, b) {
+        for (let i = 1; i <= 3; i++)
+            if (a != i && b != i)
+            return i;
+        return -1;
     }
 }
 
