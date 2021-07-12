@@ -1,9 +1,10 @@
 game_W = 0, game_H = 0;
-N = 5;
+N = 4;
 A = [];
 B = [];
 x = [, 0, 0, 0];
 die = false;
+Xstart = Xend = 0;
 
 class game {
     constructor() {
@@ -22,9 +23,7 @@ class game {
         A[3] = [];
         for (let i = 0; i < N; i++)
             A[1][i] = N - i;
-        this.solve(1, 3, N);
 
-        // console.log(B);
         this.rec = [];
         this.render();
         this.loop();
@@ -34,7 +33,9 @@ class game {
 
     listenMouse() {
         document.addEventListener("mousedown", evt => {
-
+            var x = evt.offsetX == undefined ? evt.layerX : evt.offsetX;
+            var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
+            Xstart = this.getCol(x);
         })
 
         document.addEventListener("mousemove", evt => {
@@ -45,7 +46,20 @@ class game {
         document.addEventListener("mouseup", evt => {
             var x = evt.offsetX == undefined ? evt.layerX : evt.offsetX;
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
+            Xend = this.getCol(x);
+            if (Xstart != Xend) {
+                this.move(Xstart, Xend);
+            }
         })
+    }
+
+    move(start, end) {
+        if (A[start][A[start].length - 1] > A[end][A[end].length - 1])
+            return;
+        this.rec[A[start][A[start].length - 1]].y = game_H - this.getWidth() / 2 - (A[end].length + 1) * this.getWidth();
+        this.rec[A[start][A[start].length - 1]].x = x[end];
+        A[end][A[end].length] = A[start][A[start].length - 1];
+            A[start] = A[start].slice(0, A[start].length - 1);
     }
 
     loop() {
@@ -72,13 +86,13 @@ class game {
             x[3] = game_W / 2 + game_W / 3;
             this.rec = [];
             for (let i = 0; i < N; i++)
-                this.rec[i] = new rectangle(this, x[1], game_H - this.getWidth() / 2 - this.getWidth() * (i + 1), game_W / 3 - i * ((game_W / 3 - 3 * this.getWidth()) / (N - 1)));
+                this.rec[N - i] = new rectangle(this, x[1], game_H - this.getWidth() / 2 - this.getWidth() * (i + 1), game_W / 3 - i * ((game_W / 3 - 3 * this.getWidth()) / (N - 1)));
         }
     }
 
     draw() {
         this.clearScreen();
-        for (let i = 0; i < N; i++)
+        for (let i = 1; i <= N; i++)
             this.rec[i].draw();
     }
 
@@ -114,6 +128,14 @@ class game {
             if (a != i && b != i)
             return i;
         return -1;
+    }
+
+    getCol(x) {
+        if (x < game_W / 3)
+            return 1;
+        if (x < 2 * game_W / 3)
+            return 2;
+        return 3;
     }
 }
 
