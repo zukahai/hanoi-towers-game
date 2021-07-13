@@ -7,7 +7,7 @@ index = 0;
 count = 1;
 auto = false;
 Round = 0;
-win = false;
+win = messageWin = false;
 cl = ["#000099", "#666633", "#220000", "#006600", "#FF00FF", "#FF9900", "#FF99CC", "#99FF33", "#00FFFF", "FFFFCC", "#FFFFCC"];
 Xstart = Xend = 0;
 touchCheck = false;
@@ -133,7 +133,6 @@ class game {
         A[end][A[end].length] = A[start][A[start].length - 1];
             A[start] = A[start].slice(0, A[start].length - 1);
         Round++;
-        console.log(A);
     }
 
     loop() {
@@ -149,14 +148,13 @@ class game {
             index++;
         }
         count++;
-        if (win && count > 0) {
+        if (messageWin && win) {
             window.alert("You Win!\n" + "N = " + N + "\nRound: " + Round);
-            count = -1000000000;
-            auto = false;
+            win = auto = false;
         }
             
-        if (A[1].length + A[2].length == 0 && !win) {
-            win = true;
+        if (A[1].length + A[2].length == 0 && !messageWin) {
+            win = messageWin = true;
             count = -10;
         }
         this.render();
@@ -243,15 +241,21 @@ class game {
     }
 
     Auto() {
+        messageWin = false;
         A[1] = [];
         A[2] = [];
         A[3] = [];
         for (let i = 0; i < N; i++)
             A[1][i] = N - i;
+        count = 1;
         auto = true;
+        Round = 0;
+        game_W--;
+        index = 0;
     }
 
     newN() {
+        messageWin = false;
         N++;
         if (N >= 10)
             N = 3;
