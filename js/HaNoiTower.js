@@ -122,6 +122,7 @@ class game {
         A[end][A[end].length] = A[start][A[start].length - 1];
             A[start] = A[start].slice(0, A[start].length - 1);
         Round++;
+        console.log(A);
     }
 
     loop() {
@@ -248,14 +249,14 @@ class game {
         for (let i = 0; i < N; i++)
             A[1][i] = N - i;
         B = [];
-        index = Round = 0;
+        index = Round = count = 0;
         this.solve(1, 3, N);
         A[1] = [];
         A[2] = [];
         A[3] = [];
         for (let i = 0; i < N; i++)
             A[1][i] = N - i;
-        auto = false;
+        auto = win = false;
         game_W--;
     }
 }
