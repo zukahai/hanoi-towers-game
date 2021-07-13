@@ -11,6 +11,7 @@ win = messageWin = false;
 cl = ["#000099", "#666633", "#220000", "#006600", "#FF00FF", "#FF9900", "#FF99CC", "#99FF33", "#00FFFF", "FFFFCC", "#FFFFCC"];
 Xstart = Xend = 0;
 touchCheck = false;
+speedAuto = 1;
 
 var auto_im = new Image();
 auto_im.src = "images/auto.png";
@@ -51,8 +52,10 @@ class game {
 
     listenMouse() {
         document.addEventListener("mousedown", evt => {
-            if (auto)
+            if (auto) {
+                speedAuto++;
                 return;
+            }
             touchCheck = true;
             var x = evt.offsetX == undefined ? evt.layerX : evt.offsetX;
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
@@ -99,8 +102,10 @@ class game {
         })
 
         document.addEventListener("touchstart", evt => {
-            if (auto)
+            if (auto) {
+                speedAuto ++;
                 return;
+            }
             touchCheck = true;
             var x = evt.touches[0].pageX - (document.documentElement.clientWidth - game_W) / 2;
             var y = evt.touches[0].pageY;
@@ -138,7 +143,7 @@ class game {
     loop() {
         this.update();
         this.draw();
-        setTimeout(() => this.loop(), 30);
+        setTimeout(() => this.loop(), 30 / speedAuto);
     }
 
     update() {
@@ -148,14 +153,15 @@ class game {
             index++;
         }
         count++;
-        if (messageWin && win) {
+        if (messageWin && win && count++ > 0) {
             window.alert("You Win!\n" + "N = " + N + "\nRound: " + Round);
             win = auto = false;
+            speedAuto = 1;
         }
             
         if (A[1].length + A[2].length == 0 && !messageWin) {
             win = messageWin = true;
-            count = -10;
+            count = -10 * speedAuto;
         }
         this.render();
     }
