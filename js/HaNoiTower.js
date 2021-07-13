@@ -51,6 +51,8 @@ class game {
 
     listenMouse() {
         document.addEventListener("mousedown", evt => {
+            if (auto)
+                return;
             touchCheck = true;
             var x = evt.offsetX == undefined ? evt.layerX : evt.offsetX;
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
@@ -62,6 +64,8 @@ class game {
         })
 
         document.addEventListener("mousemove", evt => {
+            if (auto)
+                return;
             var x = evt.offsetX == undefined ? evt.layerX : evt.offsetX;
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
             if (touchCheck && A[Xstart].length > 0) {
@@ -71,6 +75,8 @@ class game {
         })
 
         document.addEventListener("mouseup", evt => {
+            if (auto)
+                return;
             touchCheck = false;
             var x = evt.offsetX == undefined ? evt.layerX : evt.offsetX;
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
@@ -81,6 +87,8 @@ class game {
 
     listenTouch() {
         document.addEventListener("touchmove", evt => {
+            if (auto)
+                return;
             var x = evt.touches[0].pageX - (document.documentElement.clientWidth - game_W) / 2;
             var y = evt.touches[0].pageY;
             Xend = this.getCol(x);
@@ -91,6 +99,8 @@ class game {
         })
 
         document.addEventListener("touchstart", evt => {
+            if (auto)
+                return;
             touchCheck = true;
             var x = evt.touches[0].pageX - (document.documentElement.clientWidth - game_W) / 2;
             var y = evt.touches[0].pageY;
@@ -100,8 +110,9 @@ class game {
         })
 
         document.addEventListener("touchend", evt => {   
-            // if (Xstart != Xend)
-                this.move(Xstart, Xend);
+            if (auto)
+                return;
+            this.move(Xstart, Xend);
             touchCheck = false;
         })
 
@@ -141,6 +152,7 @@ class game {
         if (win && count > 0) {
             window.alert("You Win!\n" + "N = " + N + "\nRound: " + Round);
             count = -1000000000;
+            auto = false;
         }
             
         if (A[1].length + A[2].length == 0 && !win) {
