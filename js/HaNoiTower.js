@@ -185,9 +185,9 @@ class game {
     }
 
     drawIcon() {
-        this.context.font = this.getWidth() / 1.5 + 'px Calibri';
+        this.context.font = this.getWidth() / 2 + 'px Arial Black';
         this.context.fillStyle = "green";
-        this.context.fillRect(game_W  - 1.5 * this.getWidth(), 0, 1.5 * this.getWidth(), this.getWidth());
+        this.context.fillRect(game_W  - 1.7 * this.getWidth(), 0, 1.7 * this.getWidth(), this.getWidth());
         this.context.fillStyle = "#FF0000";
         this.context.fillText("Round: " + Round, game_W / 2 - this.getWidth(), this.getWidth() / 1.5);
         this.context.fillText("N = " + N, game_W  - 1.5 * this.getWidth(), this.getWidth() / 1.5);
