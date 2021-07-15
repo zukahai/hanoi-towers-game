@@ -154,7 +154,8 @@ class game {
         }
         count++;
         if (messageWin && win && count++ > 0) {
-            window.alert("You Win!\n" + "N = " + N + "\nRound: " + Round);
+            let evalute = (Round == B.length) ? "Perfect" : (Round / B.length < 1.6) ? "Pretty good" : "Need more practice";
+            window.alert("You Win!\n" + "N = " + N + "\nRound: " + Round + "\nEvaluate: " + evalute);
             win = auto = false;
             speedAuto = 1;
         }
