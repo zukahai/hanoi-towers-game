@@ -24,9 +24,9 @@ class game {
     }
 
     init() {
-        this.canvas = document.createElement("canvas");
+        this.canvas = document.getElementById("canvas");
         this.context = this.canvas.getContext("2d");
-        document.body.appendChild(this.canvas);
+        // document.body.appendChild(this.canvas);
 
         A[1] = [];
         A[2] = [];
@@ -62,7 +62,7 @@ class game {
             if (x <  1.5 * this.getWidth() && y < this.getWidth())
                 this.Auto();
             if (x > game_W - 2 * this.getWidth()  && y < this.getWidth())
-                this.newN();
+                this.newN(N++);
             Xstart = this.getCol(x);
         })
 
@@ -158,6 +158,7 @@ class game {
             window.alert("You Win!\n" + "N = " + N + "\nRound: " + Round + "\nEvaluate: " + evalute);
             win = auto = false;
             speedAuto = 1;
+            this.newN(N);
         }
             
         if (A[1].length + A[2].length == 0 && !messageWin) {
@@ -169,10 +170,13 @@ class game {
 
     render() {
         if (game_W != document.documentElement.clientWidth || game_H != document.documentElement.clientHeight) {
+            console.log("Hello");
             this.canvas.height = document.documentElement.clientHeight;
             this.canvas.width = document.documentElement.clientWidth;
             game_W = this.canvas.width;
             game_H = this.canvas.height;
+            this.newN(N);
+            game_W++;
             x[2] = game_W / 2;
             x[1] = game_W / 2 - game_W / 3;
             x[3] = game_W / 2 + game_W / 3;
@@ -261,9 +265,9 @@ class game {
         index = 0;
     }
 
-    newN() {
+    newN(n) {
         messageWin = false;
-        N++;
+        N = n;
         if (N >= 10)
             N = 3;
         A[1] = [];
