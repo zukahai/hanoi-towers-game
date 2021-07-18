@@ -62,7 +62,8 @@ class game {
             if (x <  1.5 * this.getWidth() && y < this.getWidth())
                 this.Auto();
             if (x > game_W - 2 * this.getWidth()  && y < this.getWidth())
-                this.newN(N++);
+                this.newN(++N);
+            
             Xstart = this.getCol(x);
         })
 
@@ -170,7 +171,6 @@ class game {
 
     render() {
         if (game_W != document.documentElement.clientWidth || game_H != document.documentElement.clientHeight) {
-            console.log("Hello");
             this.canvas.height = document.documentElement.clientHeight;
             this.canvas.width = document.documentElement.clientWidth;
             game_W = this.canvas.width;
@@ -283,7 +283,7 @@ class game {
         A[3] = [];
         for (let i = 0; i < N; i++)
             A[1][i] = N - i;
-        auto = win = false;
+        win = false;
         game_W--;
     }
 }
