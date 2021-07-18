@@ -79,9 +79,9 @@ class game {
         })
 
         document.addEventListener("mouseup", evt => {
+            touchCheck = false;
             if (auto)
                 return;
-            touchCheck = false;
             var x = evt.offsetX == undefined ? evt.layerX : evt.offsetX;
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
             Xend = this.getCol(x);
