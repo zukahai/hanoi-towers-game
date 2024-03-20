@@ -5,7 +5,7 @@ x = [, 0, 0, 0];
 index = 0;
 count = 1;
 auto = false;
-Round = 0;
+round = 0;
 win = messageWin = false;
 cl = ["#FFD700", "#00FF00", "#FF1493", "#87CEEB", "#FFA500", "#FF69B4", "#7CFC00", "#00FFFF", "#FFE4B5", "#20B2AA", "#F08080"];
 
@@ -155,7 +155,7 @@ class game {
         this.rec[A[start][A[start].length - 1]].x = x[end];
         A[end][A[end].length] = A[start][A[start].length - 1];
             A[start] = A[start].slice(0, A[start].length - 1);
-        Round++;
+        round++;
     }
 
     loop() {
@@ -172,14 +172,15 @@ class game {
         }
         count++;
         if (messageWin && win && count++ > 0) {
-            let evalute = (Round == B.length) ? "Hoàn hảo" : (Round / B.length < 1.6) ? "Tốt" : "Cần cố gắng thêm";
+            let evalute = (round == B.length) ? "Hoàn hảo" : (round / B.length < 1.6) ? "Tốt" : "Cần cố gắng thêm";
             if (!auto)
-                window.alert("Bạn đã thắng!\n" + "N = " + this.N + "\nSố bước: " + Round + "\nĐánh giá: " + evalute + "\nSố bước ít nhất: "+B.length);
+                window.alert("Bạn đã hoàn thành màn chơi với " + "N = " + this.N + "\nSố bước đã thực hiện: " + round + "\nĐánh giá: " + evalute + "\nSố bước ít nhất của màn chơi: "+B.length);
             else
                 window.alert("Quá trình auto đã hoàn tất");
             win = auto = false;
             speedAuto = 1;
-            this.newN(N);
+            this.N += (round == B.length)
+            this.newN(this.N);
         }
             
         if ((A[2].length == this.N || A[3].length == this.N ) && !messageWin) {
@@ -219,7 +220,7 @@ class game {
         this.context.fillStyle = "green";
         this.context.fillRect(gameWidth  - 1.7 * this.getWidth(), 0, 1.7 * this.getWidth(), this.getWidth());
         this.context.fillStyle = "#ffffff";
-        this.context.fillText("Round: " + Round, gameWidth / 2, this.getWidth() / 1.5);
+        this.context.fillText("round: " + round, gameWidth / 2, this.getWidth() / 1.5);
         this.context.fillText("N = " + this.N, gameWidth  - 1.5 * this.getWidth() / 2, this.getWidth() / 1.5);
         this.context.drawImage(auto_im, 0, 0, this.getWidth() * 1.5, this.getWidth());
     }
@@ -282,7 +283,7 @@ class game {
                 A[1][i] = this.N - i;
             count = 1;
             auto = true;
-            Round = 0;
+            round = 0;
             gameWidth--;
             index = 0;
         }
@@ -299,7 +300,7 @@ class game {
         for (let i = 0; i < this.N; i++)
             A[1][i] = this.N - i;
         B = [];
-        index = Round = count = 0;
+        index = round = count = 0;
         this.solve(1, 3, this.N);
         A[1] = [];
         A[2] = [];
