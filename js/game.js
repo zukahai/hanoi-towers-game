@@ -257,17 +257,19 @@ class game {
     }
 
     autoSolve() {
-        messageWin = false;
-        A[1] = [];
-        A[2] = [];
-        A[3] = [];
-        for (let i = 0; i < N; i++)
-            A[1][i] = N - i;
-        count = 1;
-        auto = true;
-        Round = 0;
-        gameWidth--;
-        index = 0;
+        if (gameStart) {
+            messageWin = false;
+            A[1] = [];
+            A[2] = [];
+            A[3] = [];
+            for (let i = 0; i < N; i++)
+                A[1][i] = N - i;
+            count = 1;
+            auto = true;
+            Round = 0;
+            gameWidth--;
+            index = 0;
+        }
     }
 
     newN(n) {

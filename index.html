@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <title>HaNoi Towers game | HaiZuka</title>
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./css/modal.css">
     <meta 
         name='viewport' 
         content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' 
@@ -10,7 +12,21 @@
 </head>
 <body>
     <canvas id = 'canvas'></canvas>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h1> Trò chơi tháp Hà Nội</h1>
+          <h2>Luật chơi</h2>
+          <p>
+            Nhiệm vụ của bạn là di chuyển tất cả các đĩa từ cột thứ 1 qua cột thứ 3<br>
+            Bạn chỉ được phép di chuyển một đĩa mỗi lần, và không được đặt đĩa lớn hơn lên đĩa nhỏ hơn.
+          </p>
+          <input type="button" id="input-close" value="Đã hiểu">
+        </div>
+      </div>
 </body>
+<script src="./js/modal.js"></script>
 <script type="text/javascript" src="js/rectangle.js"></script>
 <script type="text/javascript" src="js/game.js"></script>
 </html>
