@@ -220,7 +220,7 @@ class game {
         this.context.fillStyle = "green";
         this.context.fillRect(gameWidth  - 1.7 * this.getWidth(), 0, 1.7 * this.getWidth(), this.getWidth());
         this.context.fillStyle = "#ffffff";
-        this.context.fillText("round: " + round, gameWidth / 2, this.getWidth() / 1.5);
+        this.context.fillText("Number of steps: " + round, gameWidth / 2, this.getWidth() / 1.5);
         this.context.fillText("N = " + this.N, gameWidth  - 1.5 * this.getWidth() / 2, this.getWidth() / 1.5);
         this.context.drawImage(auto_im, 0, 0, this.getWidth() * 1.5, this.getWidth());
     }
