@@ -1,4 +1,4 @@
-game_W = 0, game_H = 0;
+gameWidth = 0, gameHeight = 0;
 N = 3;
 A = [];
 B = [];
@@ -62,7 +62,7 @@ class game {
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
             if (x <  1.5 * this.getWidth() && y < this.getWidth())
                 this.autoSolve();
-            if (x > game_W - 2 * this.getWidth()  && y < this.getWidth())
+            if (x > gameWidth - 2 * this.getWidth()  && y < this.getWidth())
                 this.newN(++N);
             
             Xstart = this.getCol(x);
@@ -94,7 +94,7 @@ class game {
         document.addEventListener("touchmove", evt => {
             if (auto)
                 return;
-            var x = evt.touches[0].pageX - (document.documentElement.clientWidth - game_W) / 2;
+            var x = evt.touches[0].pageX - (document.documentElement.clientWidth - gameWidth) / 2;
             var y = evt.touches[0].pageY;
             Xend = this.getCol(x);
             if (touchCheck && A[Xstart].length > 0) {
@@ -109,7 +109,7 @@ class game {
                 return;
             }
             touchCheck = true;
-            var x = evt.touches[0].pageX - (document.documentElement.clientWidth - game_W) / 2;
+            var x = evt.touches[0].pageX - (document.documentElement.clientWidth - gameWidth) / 2;
             var y = evt.touches[0].pageY;
             if (x <  1.5 * this.getWidth() && y < this.getWidth())
                 this.autoSolve();
@@ -130,12 +130,12 @@ class game {
         if (A[start].length <= 0)
             return;
         if (A[start][A[start].length - 1] > A[end][A[end].length - 1] || start == end) {
-            this.rec[A[start][A[start].length - 1]].y = game_H - this.getWidth() / 2 - (A[start].length) * this.getWidth();
+            this.rec[A[start][A[start].length - 1]].y = gameHeight - this.getWidth() / 2 - (A[start].length) * this.getWidth();
             this.rec[A[start][A[start].length - 1]].x = x[start];
             return;
         }
             
-        this.rec[A[start][A[start].length - 1]].y = game_H - this.getWidth() / 2 - (A[end].length + 1) * this.getWidth();
+        this.rec[A[start][A[start].length - 1]].y = gameHeight - this.getWidth() / 2 - (A[end].length + 1) * this.getWidth();
         this.rec[A[start][A[start].length - 1]].x = x[end];
         A[end][A[end].length] = A[start][A[start].length - 1];
             A[start] = A[start].slice(0, A[start].length - 1);
@@ -174,19 +174,19 @@ class game {
     }
 
     render() {
-        if (game_W != document.documentElement.clientWidth || game_H != document.documentElement.clientHeight) {
+        if (gameWidth != document.documentElement.clientWidth || gameHeight != document.documentElement.clientHeight) {
             this.canvas.height = document.documentElement.clientHeight;
             this.canvas.width = document.documentElement.clientWidth;
-            game_W = this.canvas.width;
-            game_H = this.canvas.height;
+            gameWidth = this.canvas.width;
+            gameHeight = this.canvas.height;
             this.newN(N);
-            game_W++;
-            x[2] = game_W / 2;
-            x[1] = game_W / 2 - game_W / 3;
-            x[3] = game_W / 2 + game_W / 3;
+            gameWidth++;
+            x[2] = gameWidth / 2;
+            x[1] = gameWidth / 2 - gameWidth / 3;
+            x[3] = gameWidth / 2 + gameWidth / 3;
             this.rec = [];
             for (let i = 0; i < N; i++)
-                this.rec[N - i] = new rectangle(this, x[1], game_H - this.getWidth() / 2 - this.getWidth() * (i + 1), game_W / 3 - i * ((game_W / 3 - 1.5 * this.getWidth()) / (N - 1)), cl[i], N - i);
+                this.rec[N - i] = new rectangle(this, x[1], gameHeight - this.getWidth() / 2 - this.getWidth() * (i + 1), gameWidth / 3 - i * ((gameWidth / 3 - 1.5 * this.getWidth()) / (N - 1)), cl[i], N - i);
         }
     }
 
@@ -201,17 +201,17 @@ class game {
         this.context.textAlign = "center";
         this.context.font = this.getWidth() / 3 + 'px NVNPixelFJVerdana8pt';
         this.context.fillStyle = "green";
-        this.context.fillRect(game_W  - 1.7 * this.getWidth(), 0, 1.7 * this.getWidth(), this.getWidth());
+        this.context.fillRect(gameWidth  - 1.7 * this.getWidth(), 0, 1.7 * this.getWidth(), this.getWidth());
         this.context.fillStyle = "#ffffff";
-        this.context.fillText("Round: " + Round, game_W / 2, this.getWidth() / 1.5);
-        this.context.fillText("N = " + N, game_W  - 1.5 * this.getWidth() / 2, this.getWidth() / 1.5);
+        this.context.fillText("Round: " + Round, gameWidth / 2, this.getWidth() / 1.5);
+        this.context.fillText("N = " + N, gameWidth  - 1.5 * this.getWidth() / 2, this.getWidth() / 1.5);
         this.context.drawImage(auto_im, 0, 0, this.getWidth() * 1.5, this.getWidth());
     }
 
     clearScreen() {
-        this.context.clearRect(0, 0, game_W, game_H);
+        this.context.clearRect(0, 0, gameWidth, gameHeight);
         this.context.fillStyle = '#000000';
-        this.context.fillRect(0 , 0, game_W, game_H);
+        this.context.fillRect(0 , 0, gameWidth, gameHeight);
         this.context.fillStyle = '#454545';
         for (let i = 1; i <= 3; i++) {
             this.context.beginPath();
@@ -219,12 +219,12 @@ class game {
             this.context.fill();
             this.context.closePath()
 
-            this.context.fillRect(x[i] - this.getWidth() / 4 , 2 * this.getWidth(), this.getWidth() / 2, game_H);
+            this.context.fillRect(x[i] - this.getWidth() / 4 , 2 * this.getWidth(), this.getWidth() / 2, gameHeight);
         }
-        this.context.fillRect(0 , game_H - this.getWidth(), game_W, this.getWidth() * 1.1);
+        this.context.fillRect(0 , gameHeight - this.getWidth(), gameWidth, this.getWidth() * 1.1);
     }
     getWidth() {
-        var area = game_W * game_H;
+        var area = gameWidth * gameHeight;
         return Math.sqrt(area / 300);
     }
 
@@ -249,9 +249,9 @@ class game {
     }
 
     getCol(x) {
-        if (x < game_W / 3)
+        if (x < gameWidth / 3)
             return 1;
-        if (x < 2 * game_W / 3)
+        if (x < 2 * gameWidth / 3)
             return 2;
         return 3;
     }
@@ -266,7 +266,7 @@ class game {
         count = 1;
         auto = true;
         Round = 0;
-        game_W--;
+        gameWidth--;
         index = 0;
     }
 
@@ -289,7 +289,7 @@ class game {
         for (let i = 0; i < N; i++)
             A[1][i] = N - i;
         win = false;
-        game_W--;
+        gameWidth--;
     }
 }
 
