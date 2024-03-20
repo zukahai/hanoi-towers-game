@@ -8,13 +8,14 @@ count = 1;
 auto = false;
 Round = 0;
 win = messageWin = false;
-cl = ["#000099", "#666633", "#220000", "#006600", "#FF00FF", "#FF9900", "#FF99CC", "#99FF33", "#00FFFF", "FFFFCC", "#FFFFCC"];
+cl = ["#FFD700", "#00FF00", "#FF1493", "#87CEEB", "#FFA500", "#FF69B4", "#7CFC00", "#00FFFF", "#FFE4B5", "#20B2AA", "#F08080"];
+
 Xstart = Xend = 0;
 touchCheck = false;
 speedAuto = 1;
 
 var auto_im = new Image();
-auto_im.src = "images/auto.png";
+auto_im.src = "assets/images/auto.png";
 
 class game {
     constructor() {
@@ -60,7 +61,7 @@ class game {
             var x = evt.offsetX == undefined ? evt.layerX : evt.offsetX;
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
             if (x <  1.5 * this.getWidth() && y < this.getWidth())
-                this.Auto();
+                this.autoSolve();
             if (x > game_W - 2 * this.getWidth()  && y < this.getWidth())
                 this.newN(++N);
             
@@ -111,7 +112,7 @@ class game {
             var x = evt.touches[0].pageX - (document.documentElement.clientWidth - game_W) / 2;
             var y = evt.touches[0].pageY;
             if (x <  1.5 * this.getWidth() && y < this.getWidth())
-                this.Auto();
+                this.autoSolve();
             Xstart = Xend = this.getCol(x);
         })
 
@@ -155,8 +156,11 @@ class game {
         }
         count++;
         if (messageWin && win && count++ > 0) {
-            let evalute = (Round == B.length) ? "Perfect" : (Round / B.length < 1.6) ? "Pretty good" : "Need more practice";
-            window.alert("You Win!\n" + "N = " + N + "\nRound: " + Round + "\nEvaluate: " + evalute);
+            let evalute = (Round == B.length) ? "Hoàn hảo" : (Round / B.length < 1.6) ? "Tốt" : "Cần cố gắng thêm";
+            if (!auto)
+                window.alert("Bạn đã thắng!\n" + "N = " + N + "\nSố bước: " + Round + "\nĐánh giá: " + evalute + "\nSố bước ít nhất: "+B.length);
+            else
+                window.alert("Quá trình auto đã hoàn tất");
             win = auto = false;
             speedAuto = 1;
             this.newN(N);
@@ -182,32 +186,33 @@ class game {
             x[3] = game_W / 2 + game_W / 3;
             this.rec = [];
             for (let i = 0; i < N; i++)
-                this.rec[N - i] = new rectangle(this, x[1], game_H - this.getWidth() / 2 - this.getWidth() * (i + 1), game_W / 3 - i * ((game_W / 3 - 1.5 * this.getWidth()) / (N - 1)), cl[i]);
+                this.rec[N - i] = new rectangle(this, x[1], game_H - this.getWidth() / 2 - this.getWidth() * (i + 1), game_W / 3 - i * ((game_W / 3 - 1.5 * this.getWidth()) / (N - 1)), cl[i], N - i);
         }
     }
 
     draw() {
         this.clearScreen();
         for (let i = 1; i <= N; i++)
-            this.rec[i].draw();
+            this.rec[i].draw(); 
         this.drawIcon();
     }
 
     drawIcon() {
-        this.context.font = this.getWidth() / 2 + 'px Arial Black';
+        this.context.textAlign = "center";
+        this.context.font = this.getWidth() / 3 + 'px NVNPixelFJVerdana8pt';
         this.context.fillStyle = "green";
         this.context.fillRect(game_W  - 1.7 * this.getWidth(), 0, 1.7 * this.getWidth(), this.getWidth());
-        this.context.fillStyle = "#FF0000";
-        this.context.fillText("Round: " + Round, game_W / 2 - this.getWidth(), this.getWidth() / 1.5);
-        this.context.fillText("N = " + N, game_W  - 1.5 * this.getWidth(), this.getWidth() / 1.5);
+        this.context.fillStyle = "#ffffff";
+        this.context.fillText("Round: " + Round, game_W / 2, this.getWidth() / 1.5);
+        this.context.fillText("N = " + N, game_W  - 1.5 * this.getWidth() / 2, this.getWidth() / 1.5);
         this.context.drawImage(auto_im, 0, 0, this.getWidth() * 1.5, this.getWidth());
     }
 
     clearScreen() {
         this.context.clearRect(0, 0, game_W, game_H);
-        this.context.fillStyle = '#339999';
+        this.context.fillStyle = '#000000';
         this.context.fillRect(0 , 0, game_W, game_H);
-        this.context.fillStyle = '#660000';
+        this.context.fillStyle = '#454545';
         for (let i = 1; i <= 3; i++) {
             this.context.beginPath();
             this.context.arc(x[i], 2 * this.getWidth(), this.getWidth() / 4, 0, 2 * Math.PI, false);
@@ -251,7 +256,7 @@ class game {
         return 3;
     }
 
-    Auto() {
+    autoSolve() {
         messageWin = false;
         A[1] = [];
         A[2] = [];
