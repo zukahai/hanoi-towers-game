@@ -49,6 +49,7 @@ class game {
 
         this.listenMouse();
         this.listenTouch();
+        this.listenKey();
     }
 
     listenMouse() {
@@ -88,6 +89,20 @@ class game {
             Xend = this.getCol(x);
             this.move(Xstart, Xend);
         })
+    }
+
+    listenKey() {
+        document.addEventListener("keydown", evt => {
+            if (evt.key === 'r') {
+                this.newN(N);
+            }
+            if (evt.key == 'n') {
+                this.newN(++N);
+            }
+            if (evt.key == 'p') {
+                this.newN(--N);
+            }
+        });
     }
 
     listenTouch() {
@@ -275,7 +290,7 @@ class game {
     newN(n) {
         messageWin = false;
         N = n;
-        if (N >= 10)
+        if (N >= 10 || n < 3)
             N = 3;
         A[1] = [];
         A[2] = [];

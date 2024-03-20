@@ -5,18 +5,19 @@
     font-style: normal;
 }
 
-body{
+body {
     background-size: cover;
     font-family: NVNPixelFJVerdana8pt;
 }
 
-body{
+body {
     background-color: white;
     margin: 0px;
     text-align: center;
 }
 
-html, body {
+html,
+body {
     margin: 0;
     height: 100%;
     overflow: hidden
@@ -24,8 +25,29 @@ html, body {
 
 html {
     scrollbar-width: none;
-    -ms-overflow-style: none; 
+    -ms-overflow-style: none;
 }
 
-html { overflow-y: hidden; }
+html {
+    overflow-y: hidden;
+}
 
+table {
+    width: 50%;
+    /* Optional: adjust width as needed */
+    border-collapse: collapse;
+}
+
+td {
+    border: 1px solid #fff;
+    /* Optional: add borders for clarity */
+    padding: 10px;
+    /* Optional: adjust padding as needed */
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
