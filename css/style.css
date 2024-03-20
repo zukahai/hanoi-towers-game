@@ -31,23 +31,3 @@ html {
 html {
     overflow-y: hidden;
 }
-
-table {
-    width: 50%;
-    /* Optional: adjust width as needed */
-    border-collapse: collapse;
-}
-
-td {
-    border: 1px solid #fff;
-    /* Optional: add borders for clarity */
-    padding: 10px;
-    /* Optional: adjust padding as needed */
-}
-
-.center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-}

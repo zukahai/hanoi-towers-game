@@ -1,51 +1,81 @@
-/* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0; /* Hiển thị modal từ phía lề trên của màn hình */
+  width: 100%;
+  height: calc(100%);
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
 
-  input[type="button"]{
-    font-family: NVNPixelFJVerdana8pt;
-    font-size: large;
-    background-color: #181818;
-    border: 1px solid #fff;
-    color: #fff;
-  }
 
-  input[type="button"]:hover{
-    background-color: #ffffff;
-    color: #000000;
-  }
-  
-  /* Modal Content/Box */
+input[type="button"] {
+  font-family: NVNPixelFJVerdana8pt;
+  font-size: large;
+  background-color: #181818;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+input[type="button"]:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #0d0f0f;
+  margin: 15% auto;
+  /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  color: aliceblue;
+  width: 80%;
+  /* Could be more or less, depending on screen size */
+}
+
+@media (min-width: 768px) {
   .modal-content {
-    background-color: #0d0f0f;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    color: aliceblue;
-    width: 80%; /* Could be more or less, depending on screen size */
+    margin: 5% auto;
   }
-  
-  /* The Close Button */
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 50%;
+  border-collapse: collapse;
+}
+
+@media (max-width: 768px) {
+  table {
+    width: 100%;
   }
-  
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  
+}
+
+td {
+  border: 1px solid #fff;
+  padding: 10px;
+}
